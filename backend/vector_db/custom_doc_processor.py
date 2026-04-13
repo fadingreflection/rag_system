@@ -2,7 +2,7 @@
 import re
 
 import docx
-from langchain.document_loaders import UnstructuredWordDocumentLoader
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader
 
 
 class CustomDocProcessor:

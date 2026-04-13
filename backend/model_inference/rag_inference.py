@@ -9,17 +9,20 @@ from backend.model_loader.loader import MlModelLoader  # noqa: E402, I001
 from backend.rag_constructor.rag_construct import RagBuilder  # noqa: E402
 from backend.vector_db.db_builder import VectorDBBuilder  # noqa: E402
 from torch import cuda  # noqa: E402
+from backend.config import (DATA_ID,  # noqa: E402
+                            SPLITTER,
+                            RECORD_KEY,
+                            MODEL_ID,
+                            TASK_TYPE,
+                            MARKER,
+                            USE_CUSTOM_DATA_FLAG,
+                            RECREATE_DB_FLAG,
+                            )
 
-DATA_ID = "Den4ikAI/russian_cleared_wikipedia"
-SPLITTER = "train"
-RECORD_KEY = "sample"
-MODEL_ID_SS = "intfloat/multilingual-e5-base"
-DB_DIR = "chroma_ragmini"
-MODEL_ID = "unsloth/Qwen2.5-3B-unsloth-bnb-4bit" # неплохо работает на русском, нужный размер эмбеддингов 768
-TASK_TYPE = "text-generation"
-MARKER = "</think>"
-USE_CUSTOM_DATA_FLAG = True
-RECREATE_DB_FLAG = False
+import torch  # noqa: E402
+print(torch.__version__)          # Узнаем версию PyTorch
+print(torch.cuda.is_available())  # Проверяем, видит ли PyTorch GPU
+
 
 DEVICE = f"cuda:{cuda.current_device()}" if cuda.is_available() else "cpu"
 #TODO @fadingreflection change to logs
@@ -41,13 +44,13 @@ class RagModelInference:
     def rag_system_inference(self, prompt: str):
         qa_chain = self.rag_builder_inst.build_chain()
         response = qa_chain.invoke(prompt)
-        print("Ответ:", response["result"].split(MARKER, 1)[1].strip())
+        return {"response" : response["result"].split(MARKER, 1)[1].strip()}
         # print("\nSource documents:")
         # for doc in response["source_documents"]:
         #     print(doc.page_content[:80], "…")
 
 
-inst = RagModelInference()
-# inst.rag_system_inference("Дай паспортные данные Черкасовых")
+# inst = RagModelInference()
+# inst.rag_system_inference("Была ли до текущей работы рассмотрена терминология морского права в какой-либо диссертации")
 # inst.rag_system_inference("По какому адресу находится объект недвижимости, относительно которого совершается сделка?")
 # inst.rag_system_inference("укажи характеристики квартины на Пилюгина")

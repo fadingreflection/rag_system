@@ -1,18 +1,22 @@
 """VectorDB builder."""
 
 from datasets import load_dataset
-from langchain.docstore.document import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+from backend.config import (
+    CHUNK_OVERLAP,
+    CHUNK_SIZE,
+    CUSTOM_DOC_PATH,
+    DB_DIR,
+    DB_DIR_CUSTOM,
+    LOAD_VIA_LANGCHAIN_FLAG,
+    MODEL_ID_SS,
+)
 from backend.vector_db.custom_doc_processor import CustomDocProcessor
 
-MODEL_ID_SS = "intfloat/multilingual-e5-base"
-DB_DIR = "chroma_ragmini"
-DB_DIR_CUSTOM = "my_personal_docs_db"
-CUSTOM_DOC_PATH = r"C:\Users\Anastasiya Fedotova\Desktop\квартирный вопрос\Аванс Ак. Пилюгина фин.docx"
-LOAD_VIA_LANGCHAIN_FLAG = False
 
 class VectorDBBuilder:
     def __init__(self, data_id: str, splitter: str, record_key: str, use_custom_data=False, recreate_db=False):
@@ -48,8 +52,8 @@ class VectorDBBuilder:
     def custom_text_splitter(self, clean_text):
         #TODO @fadingreflection move to global params to be set
         text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
+            chunk_size=int(CHUNK_SIZE),
+            chunk_overlap=int(CHUNK_OVERLAP),
             length_function=len,
             separators=["\n\n", "\n", ". ", "! ", "? ", "; ", ", ", " "]  # Приоритет разделителей
         )
@@ -59,8 +63,8 @@ class VectorDBBuilder:
 
     def get_chunks(self):
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=512,
-            chunk_overlap=50,
+            chunk_size=int(CHUNK_SIZE),
+            chunk_overlap=int(CHUNK_OVERLAP),
             )
         docs = splitter.split_documents(self.data)
         #TODO @fadingreflection change to logs

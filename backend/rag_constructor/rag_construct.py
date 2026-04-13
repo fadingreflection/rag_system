@@ -1,5 +1,5 @@
 """Rag system constructor."""
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_huggingface import HuggingFacePipeline
 
 from backend.nlp_pipeline.customize_prompt import simple_custom_prompt

@@ -1,10 +1,17 @@
 """NLP prompt."""
+from backend.config import (
+    DO_SAMPLE,
+    MAX_NEW_TOKENS,
+    NUM_RETURN_SEQUENCES,
+    TOP_K,
+    TRUNCATION,
+)
 
-CONFIG_DICT = {"max_new_tokens":200,     # генерируем ≤ 200 новых токенов
-               "do_sample":True,         # позволяет модели додумывать
-               "truncation":True,        # обрываем слишком длинные ответы
-               "top_k":20,               # топ-20 наиболее вероятных токенов на выходе генерации
-               "num_return_sequences":1, # 1 вариант ответа
+CONFIG_DICT = {"max_new_tokens":MAX_NEW_TOKENS,     # генерируем ≤ 200 новых токенов
+               "do_sample":DO_SAMPLE,         # позволяет модели додумывать
+               "truncation":TRUNCATION,        # обрываем слишком длинные ответы
+               "top_k":TOP_K,               # топ-20 наиболее вероятных токенов на выходе генерации
+               "num_return_sequences":NUM_RETURN_SEQUENCES, # 1 вариант ответа
                }
 
 class AskLLM:
