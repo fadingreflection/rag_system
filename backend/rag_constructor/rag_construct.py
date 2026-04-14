@@ -2,12 +2,13 @@
 from langchain_classic.chains import RetrievalQA
 from langchain_huggingface import HuggingFacePipeline
 
+from backend.config import NUM_SEARCH_CHUNKS
 from backend.nlp_pipeline.customize_prompt import simple_custom_prompt
 
 
 class RagBuilder:
     def __init__(self, vectordb, llm_pipeline):
-        self.retriver = vectordb.as_retriever()
+        self.retriver = vectordb.as_retriever(search_kwargs={"k": int(NUM_SEARCH_CHUNKS)})
         self.generator = HuggingFacePipeline(
             pipeline=llm_pipeline,
         )

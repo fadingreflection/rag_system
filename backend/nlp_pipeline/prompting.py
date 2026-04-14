@@ -3,6 +3,8 @@ from backend.config import (
     DO_SAMPLE,
     MAX_NEW_TOKENS,
     NUM_RETURN_SEQUENCES,
+    SEED,
+    TEMPERATURE,
     TOP_K,
     TRUNCATION,
 )
@@ -12,6 +14,8 @@ CONFIG_DICT = {"max_new_tokens":MAX_NEW_TOKENS,     # генерируем ≤ 2
                "truncation":TRUNCATION,        # обрываем слишком длинные ответы
                "top_k":TOP_K,               # топ-20 наиболее вероятных токенов на выходе генерации
                "num_return_sequences":NUM_RETURN_SEQUENCES, # 1 вариант ответа
+               "seed":SEED,
+               "temperature":TEMPERATURE,
                }
 
 class AskLLM:

@@ -69,6 +69,15 @@ class VectorDBBuilder:
         docs = splitter.split_documents(self.data)
         #TODO @fadingreflection change to logs
         print("Чанков:", len(docs))
+        # В методе get_chunks() или перед созданием Chroma.from_documents
+        unique_docs = []
+        seen = set()
+        for doc in docs:
+            if doc.page_content not in seen:
+                seen.add(doc.page_content)
+                unique_docs.append(doc)
+            else:
+                print(f"Дубликат удалён: {doc.page_content[:50]}...")
         return docs
 
     def get_embeds(self):

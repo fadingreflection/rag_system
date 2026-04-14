@@ -21,7 +21,7 @@ MODEL_ID = os.getenv("MODEL_ID", "unsloth/Qwen2.5-3B-unsloth-bnb-4bit" )# неп
 TASK_TYPE = os.getenv("TASK_TYPE", "text-generation")
 MARKER = os.getenv("MARKER", "</think>")
 USE_CUSTOM_DATA_FLAG = os.getenv("USE_CUSTOM_DATA_FLAG", True)
-RECREATE_DB_FLAG = os.getenv("RECREATE_DB_FLAG", False)
+RECREATE_DB_FLAG = os.getenv("RECREATE_DB_FLAG", True)
 
 # NLP PIPE: PROMPTING
 MAX_NEW_TOKENS=os.getenv("MAX_NEW_TOKENS", 256)
@@ -29,6 +29,11 @@ DO_SAMPLE=os.getenv("DO_SAMPLE", True) #позволяем модели доду
 TRUNCATION=os.getenv("truncation", True)
 TOP_K = os.getenv("TOP_K", 5)
 NUM_RETURN_SEQUENCES = os.getenv("NUM_RETURN_SEQUENCES", 1)
+SEED = os.getenv("SEED", 42)
+TEMPERATURE = os.getenv("TEMPERATURE", 0)
+
+# RAG CONSTRUCT
+NUM_SEARCH_CHUNKS = os.getenv("NUM_SEARCH_CHUNKS", 5)
 
 # DB BUILDER
 MODEL_ID_SS = os.getenv("MODEL_ID_SS", "intfloat/multilingual-e5-base")

@@ -44,13 +44,14 @@ class RagModelInference:
     def rag_system_inference(self, prompt: str):
         qa_chain = self.rag_builder_inst.build_chain()
         response = qa_chain.invoke(prompt)
+        print("\nSource documents:")
+        for doc in response["source_documents"]:
+            print(doc.page_content[:200], "…")
         return {"response" : response["result"].split(MARKER, 1)[1].strip()}
-        # print("\nSource documents:")
-        # for doc in response["source_documents"]:
-        #     print(doc.page_content[:80], "…")
+
 
 
 # inst = RagModelInference()
-# inst.rag_system_inference("Была ли до текущей работы рассмотрена терминология морского права в какой-либо диссертации")
+# inst.rag_system_inference("кто автор данной диссертации?")
 # inst.rag_system_inference("По какому адресу находится объект недвижимости, относительно которого совершается сделка?")
 # inst.rag_system_inference("укажи характеристики квартины на Пилюгина")
